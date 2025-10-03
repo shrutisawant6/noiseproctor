@@ -3,6 +3,8 @@ $(document).ready(function () {
     const $warning = $('.warning');
     const THRESHOLD_DB = -20; // Threshold for loud sound
     let speaking = false; // flag to avoid repeated speech
+    const voices = window.speechSynthesis.getVoices();
+    const selectedVoice = voices.find(voice => voice.name === "Google US English");
 
     async function startAudioMonitoring() {
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -37,6 +39,7 @@ $(document).ready(function () {
                     speaking = true;
                     const msg = new SpeechSynthesisUtterance("Tone it down!");
                     msg.onend = () => { speaking = false; };
+                    msg.voice = selectedVoice;  // set the chosen voice
                     msg.pitch = 2;       // max pitch
                     msg.volume = 1;      // full volume
                     window.speechSynthesis.speak(msg);
@@ -54,4 +57,5 @@ $(document).ready(function () {
         //$('#startBtn').prop('disabled', true); // disable button after starting
         $('#startBtn').hide();
     });
+
 });
