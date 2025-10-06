@@ -5,6 +5,8 @@ $(document).ready(function () {
     let speaking = false; // flag to avoid repeated speech
     //const voices = window.speechSynthesis.getVoices();
     //const selectedVoice = voices.find(voice => voice.name === "Google US English");
+    checkNoiseSuppression();
+
 
     async function startAudioMonitoring() {
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
@@ -52,6 +54,39 @@ $(document).ready(function () {
                 speaking = false; // reset flag when below threshold
             }
         }, 100);
+
+
+
+
+
+
+    }
+
+
+
+    async function checkNoiseSuppression() {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({
+                audio: { noiseSuppression: true }
+            });
+
+            const track = stream.getAudioTracks()[0];
+            const settings = track.getSettings();
+
+            //console.log("Track settings:", settings);
+            $('.settings').text(JSON.stringify(settings, null, 2)); 
+
+            if (settings.noiseSuppression !== undefined) {
+                console.log("Device supports noise suppression:", settings.noiseSuppression);
+            } else {
+                console.log("Noise suppression info not available");
+            }
+
+            // Stop the track
+            track.stop();
+        } catch (err) {
+            console.error("Error accessing microphone:", err);
+        }
     }
 
     $('#startBtn').on('click', () => {
@@ -61,7 +96,6 @@ $(document).ready(function () {
     });
 
 });
-
 
 
 
