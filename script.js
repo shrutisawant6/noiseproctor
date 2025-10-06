@@ -1,7 +1,7 @@
 $(document).ready(function () {
     const $level = $('.level');
     const $warning = $('.warning');
-    const THRESHOLD_DB = -20; // Threshold for loud sound
+    const THRESHOLD_DB = -10; // Threshold for loud sound
     let speaking = false; // flag to avoid repeated speech
     //const voices = window.speechSynthesis.getVoices();
     //const selectedVoice = voices.find(voice => voice.name === "Google US English");
@@ -59,4 +59,5 @@ $(document).ready(function () {
     });
 
 });
+
 
