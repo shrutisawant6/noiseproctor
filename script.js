@@ -31,6 +31,8 @@ $(document).ready(function () {
             const width = Math.min(Math.max((db + 50) * 5, 0), 100);
             $level.css('width', width + '%');
 
+            $('.decibel').text(db);
+
             if (db > THRESHOLD_DB) {
                 $level.css('background', '#f44336');
                 $warning.text('⚠️ Loud');
@@ -59,5 +61,6 @@ $(document).ready(function () {
     });
 
 });
+
 
 
