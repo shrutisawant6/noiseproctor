@@ -39,7 +39,7 @@ $(document).ready(function () {
 
                 if (!speaking) {
                     speaking = true;
-                    const msg = new SpeechSynthesisUtterance("Tone it down!");
+                    const msg = new SpeechSynthesisUtterance("Lower your volume!");
                     msg.onend = () => { speaking = false; };
                     //msg.voice = selectedVoice;  // set the chosen voice
                     //msg.pitch = 2;       // max pitch
@@ -61,6 +61,7 @@ $(document).ready(function () {
     });
 
 });
+
 
 
 
