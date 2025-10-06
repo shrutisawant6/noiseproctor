@@ -74,7 +74,8 @@ $(document).ready(function () {
             const settings = track.getSettings();
 
             //console.log("Track settings:", settings);
-            $('.settings').text(JSON.stringify(settings, null, 2)); 
+            //$('.settings').text(JSON.stringify(settings, null, 2)); 
+            $('.settings').html('<pre>' + JSON.stringify(settings, null, 2) + '</pre>');
 
             if (settings.noiseSuppression !== undefined) {
                 console.log("Device supports noise suppression:", settings.noiseSuppression);
