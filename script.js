@@ -86,10 +86,16 @@ $(function () {
 
         //get preferred voice for speech
         function getPreferredVoice(voices) {
-            return voices.find(v => /female/i.test(v.name)) || // has "female" in name
-                voices.find(v => v.name.includes("Google US English")) || // chrome default mature female
-                voices.find(v => v.name.includes("Samantha")) || // macOS female voice
-                voices.find(v => v.lang === "en-US"); // fallback English voice
+            // return voices.find(v => /female/i.test(v.name)) || // has "female" in name
+            //     voices.find(v => v.name.includes("Google US English")) || // chrome default mature female
+            //     voices.find(v => v.name.includes("Samantha")) || // macOS female voice
+            //     voices.find(v => v.lang === "en-US"); // fallback English voice
+
+            return voices.find(v => /male/i.test(v.name)) || // has "male" in name
+                    voices.find(v => v.name.includes("Google UK English Male")) || // Chrome UK male voice
+                    voices.find(v => v.name.includes("Daniel")) || // macOS male voice
+                    voices.find(v => v.name.includes("Alex")) || // another macOS male voice
+                    voices.find(v => v.lang === "en-US"); // fallback English voice
         }
     }
 
@@ -98,6 +104,7 @@ $(function () {
         $('#startBtn').css('visibility', 'hidden');
     });
 });
+
 
 
 
