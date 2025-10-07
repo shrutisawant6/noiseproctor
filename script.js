@@ -3,6 +3,12 @@ $(function () {
     const $warning = $('.warning');
     const thresholdForNose = -7; // threshold for loud sound
     let speaking = false; // to avoid repeated speech
+    var speechStatements = [
+        "Ouch, too loud. Can you keep it low!",
+        "Dude, we need a serious Decibel Diet!",
+        "Man, stop being boisterous!",
+        "My eardrums are hurting! Keep it down!",
+        "Hey, chill out and lower it down!"];
 
     async function startAudioMonitoring() {
 
@@ -41,17 +47,17 @@ $(function () {
 
                 if (!speaking) {// if already speaking, wont be interrupted
                     speaking = true;
-                    // const msg = new SpeechSynthesisUtterance("Keep it low!");
-                    // msg.onend = () => { speaking = false; };
-                    // //msg.volume = 1;      // full volume
-                    // window.speechSynthesis.speak(msg);
 
+                    // pick up a random statement
+                    var randomIndex = Math.floor(Math.random() * speechStatements.length);
+                    var noiseUtterance = speechStatements[randomIndex];
+
+                    // speak the selected statement
                     const speechSynth = window.speechSynthesis;
-                    const utterance = new SpeechSynthesisUtterance("Keep it low!");
+                    const utterance = new SpeechSynthesisUtterance(noiseUtterance);
                     utterance.onend = () => { speaking = false; };
                     const voices = speechSynth.getVoices();
                     utterance.voice = voices[0];
-                    speechSynth.cancel();
                     speechSynth.speak(utterance);
                 }
             } else {
@@ -67,5 +73,6 @@ $(function () {
         $('#startBtn').css('visibility', 'hidden');
     });
 });
+
 
 
