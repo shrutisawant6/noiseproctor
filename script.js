@@ -41,10 +41,18 @@ $(function () {
 
                 if (!speaking) {// if already speaking, wont be interrupted
                     speaking = true;
-                    const msg = new SpeechSynthesisUtterance("Keep it low!");
-                    msg.onend = () => { speaking = false; };
-                    //msg.volume = 1;      // full volume
-                    window.speechSynthesis.speak(msg);
+                    // const msg = new SpeechSynthesisUtterance("Keep it low!");
+                    // msg.onend = () => { speaking = false; };
+                    // //msg.volume = 1;      // full volume
+                    // window.speechSynthesis.speak(msg);
+
+                    const speechSynth = window.speechSynthesis;
+                    const utterance = new SpeechSynthesisUtterance("Keep it low!");
+                    utterance.onend = () => { speaking = false; };
+                    const voices = speechSynth.getVoices();
+                    utterance.voice = voices[0];
+                    speechSynth.cancel();
+                    speechSynth.speak(utterance);
                 }
             } else {
                 $level.css('background', '#4caf50');
@@ -59,4 +67,5 @@ $(function () {
         $('#startBtn').css('visibility', 'hidden');
     });
 });
+
 
