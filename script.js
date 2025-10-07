@@ -48,16 +48,27 @@ $(function () {
                 if (!speaking) {// if already speaking, wont be interrupted
                     speaking = true;
 
-                    // pick up a random statement
-                    var randomIndex = Math.floor(Math.random() * speechStatements.length);
-                    var noiseUtterance = speechStatements[randomIndex];
+                    // // pick up a random statement
+                    // var randomIndex = Math.floor(Math.random() * speechStatements.length);
+                    // var noiseUtterance = speechStatements[randomIndex];
+
+                    // // speak the selected statement
+                    // const speechSynth = window.speechSynthesis;
+                    // const utterance = new SpeechSynthesisUtterance(noiseUtterance);
+                    // utterance.onend = () => { speaking = false; };
+                    // const voices = speechSynth.getVoices();
+                    // utterance.voice = voices[0];
+                    // speechSynth.speak(utterance);
+
+
+                    var noiseUtterance = getRandomStatment();// pick up a random statement
 
                     // speak the selected statement
                     const speechSynth = window.speechSynthesis;
                     const utterance = new SpeechSynthesisUtterance(noiseUtterance);
                     utterance.onend = () => { speaking = false; };
                     const voices = speechSynth.getVoices();
-                    utterance.voice = voices[0];
+                    utterance.voice = getPreferredVoice(voices) || voices[0];
                     speechSynth.speak(utterance);
                 }
             } else {
@@ -66,6 +77,20 @@ $(function () {
                 speaking = false; // reset flag when below threshold
             }
         }, 100);
+
+        //get random statement
+        function getRandomStatment() {
+            var randomIndex = Math.floor(Math.random() * speechStatements.length);
+            return speechStatements[randomIndex];
+        }
+
+        //get preferred voice for speech
+        function getPreferredVoice(voices) {
+            return voices.find(v => /female/i.test(v.name)) || // has "female" in name
+                voices.find(v => v.name.includes("Google US English")) || // chrome default mature female
+                voices.find(v => v.name.includes("Samantha")) || // macOS female voice
+                voices.find(v => v.lang === "en-US"); // fallback English voice
+        }
     }
 
     $('#startBtn').on('click', () => {// start sound monitoring after button click
@@ -73,6 +98,7 @@ $(function () {
         $('#startBtn').css('visibility', 'hidden');
     });
 });
+
 
 
 
