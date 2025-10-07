@@ -43,7 +43,7 @@ $(function () {
                     speaking = true;
                     const msg = new SpeechSynthesisUtterance("Keep it low!");
                     msg.onend = () => { speaking = false; };
-                    msg.volume = 1;      // full volume
+                    //msg.volume = 1;      // full volume
                     window.speechSynthesis.speak(msg);
                 }
             } else {
@@ -59,3 +59,4 @@ $(function () {
         $('#startBtn').css('visibility', 'hidden');
     });
 });
+
